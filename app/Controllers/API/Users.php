@@ -7,6 +7,7 @@ class Users extends ResourceController
 {
     public function __construct() {
         $this->model = $this->setModel(new UsersModel());
+		helper('secure_password');
     }
 
 	public function index()
@@ -55,10 +56,14 @@ class Users extends ResourceController
 				return $this->respond($json);
 			}
 
-			$users = $this->request->getJSON();
+			$users = $this->request->getJSON();						
+			//Encriptamos la clave
+			$users->password = hashPassword($users->password);
+			
+
 			if($this->model->insert($users)):
 
-				$users->id = $this->model->insertID();				
+				$users->id = $this->model->insertID();
 				
 				$json = array(
 					"status" => 201,
