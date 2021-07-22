@@ -43,7 +43,7 @@ class Auth extends BaseController
 
             if (verifyPassword($password, $validateUser["password"])):
                 $jwt = $this->generateJWT($validateUser);
-                return $this->respond($jwt);
+                return $this->respond(['token' => $jwt], 201);
                 //return $this->respond($validateUser);
             else:
                 return $this->failValidationError('Incorrect password');
