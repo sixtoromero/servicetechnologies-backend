@@ -38,11 +38,21 @@ $routes->post('/auth/login', 'Auth::login');
 
 $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){
 	$routes->get('users', 'Users::index');
-	$routes->post('users/craete', 'Users::create');
+	$routes->post('users/create', 'Users::create');
 	$routes->get('users/FindById/(:num)', 'Users::FindById/$1');
 	$routes->get('users/edit/(:num)', 'Users::edit/$1');
 	$routes->put('users/update/(:num)', 'Users::update/$1');
 	$routes->delete('users/delete/(:num)', 'Users::delete/$1');
+	//Orders
+	$routes->get('orders', 'Orders::index');
+	$routes->post('orders/create', 'Orders::create');
+	$routes->get('orders/FindById/(:num)', 'orders::FindById/$1');
+
+	//Invoices
+	$routes->get('invoices', 'Invoices::index');
+	$routes->post('invoices/create', 'Invoices::create');
+	
+
 });
 
 /*

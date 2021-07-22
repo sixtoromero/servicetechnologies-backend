@@ -1,98 +1,61 @@
 <?php namespace App\Controllers\API;
 
+use App\Models\OrdersModel;
 use CodeIgniter\RESTful\ResourceController;
-use App\Models\UsersModel;
 
-class Users extends ResourceController
+class Orders extends ResourceController
 {
     public function __construct() {
-        $this->model = $this->setModel(new UsersModel());
-		helper('secure_password');
+        $this->model = $this->setModel(new OrdersModel());
     }
 
 	public function index()
 	{
-		$users = $this->model->findAll();
+		$orders = $this->model->findAll();
 		$json = array(
 			"status" => 200,
 			"message" => '',
-			"data"=>$users
+			"data"=>$orders
 		);
 
 		return $this->respond($json);
 	}
 
 	public function create(){
-		
-		$validation =  \Config\Services::validation();
-
 		try {
+						
+			$orders = $this->request->getJSON();
 
-			//Validar datos
-			$validation->setRules([
-				'names' => 'required|string|max_length[255]',
-				'surnames' => 'required|string|max_length[255]',
-				'usertype' => 'required|string|max_length[255]',
-				'email' => 'required|valid_email|is_unique[users.email]',
-				'usertype' => 'required|string|max_length[120]',
-				'address' => 'required|string|max_length[255]',
-				'cellphone' => 'required|string|max_length[20]',
-				'password' => 'required|string|max_length[255]'
-			]);
-	
-			$validation->withRequest($this->request)
-			   ->run();
-
-			if ($validation->getErrors()){
-				
-				$errors = $validation->getErrors();
-
-				$json = array(
-					"status" => 404,
-					"message" => 'Las validaciones no pasaron',
-					"data"=>$errors
-				);
-					
-				return $this->respond($json);
-			}
-
-			$users = $this->request->getJSON();						
-			//Encriptamos la clave
-			$users->password = hashPassword($users->password);			
-
-			if($this->model->insert($users)):
-
-				$users->id = $this->model->insertID();
+			if ($this->model->insert($orders)):
+				$orders->id = $this->model->insertID();
 				
 				$json = array(
 					"status" => 201,
 					"message" => 'successfull',
-					"data"=>$users
+					"data"=>$orders
 				);
-
 				return $this->respondCreated($json);
-			else:
+			else:				
 				$json = array(
-					"status" => 404,
-					"message" => 'The record could not be inserted please try again',
-					"data"=> null
+					"status" => 500,
+					"message" => 'An error occurred while inserting the record',
+					"data"=>null
 				);
-					
-				return $this->respond($json);
-				//return $this->failValidationError($this->model->validation->listErros());
+				return $this->failValidationError($json);
+
+				//return $this->failValidationError($this->model->validation->listErrors());
 			endif;
-		}
-		catch (\Exception $e) {
-			//return $this->failServerError('An error has occurred on the server.');
+
+		} catch (\Exception $e) {			
 			$json = array(
-				"status" => 404,
-				"message" => 'An error has occurred on the server.',
-				"data"=> null
+				"status" => 500,
+				"message" => 'Ha ocurrido un error',
+				"data"=>null
 			);
-				
-			return $this->respond($json);
+			return $this->respond($json);			
+			//return $this->failServerError('Ha ocurrido un error');
 		}
-	}
+	}	
 
 
 	public function FindById($id = null){
@@ -108,9 +71,9 @@ class Users extends ResourceController
 				return $this->respond($json);
 			}
 
-			$users = $this->model->find($id);
+			$orders = $this->model->find($id);
 
-			if ($users == null) {
+			if ($orders == null) {
 				$json = array(
 					"status" => 404,
 					"message" => 'Record with Id not found '. $id,
@@ -122,7 +85,7 @@ class Users extends ResourceController
 			$json = array(
 				"status" => 200,
 				"message" => 'Found record',
-				"data"=>$users
+				"data"=>$orders
 			);
 	
 			return $this->respond($json);
@@ -132,7 +95,7 @@ class Users extends ResourceController
 			$json = array(
 				"status" => 404,
 				"message" => $e,
-				"data"=>$users
+				"data"=>$orders
 			);
 	
 			return $this->respond($json);
@@ -151,9 +114,9 @@ class Users extends ResourceController
 				return $this->respond($json);
 			}
 
-			$users = $this->model->find($id);
+			$orders = $this->model->find($id);
 
-			if ($users == null) {
+			if ($orders == null) {
 				$json = array(
 					"status" => 404,
 					"message" => 'Record with Id not found '. $id,
@@ -165,7 +128,7 @@ class Users extends ResourceController
 			$json = array(
 				"status" => 200,
 				"message" => '',
-				"data"=>$users
+				"data"=>$orders
 			);
 	
 			return $this->respond($json);
@@ -186,29 +149,29 @@ class Users extends ResourceController
 					"message" => 'A valid Id has not been passed',
 					"data"=> null
 				);
-
+					
 				return $this->respond($json);
 			}
-			
-			$usersVerified = $this->model->find($id);
 
-			if ($usersVerified == null) {
+			$ordersVerified = $this->model->find($id);
+
+			if ($ordersVerified == null) {
 				$json = array(
 					"status" => 404,
 					"message" => 'Record with Id not found '. $id,
 					"data"=> null
 				);
 				return $this->respond($json);
-			}
+			}						
 
-			$users = $this->request->getJSON();			
+			$orders = $this->request->getJSON();			
 
-			if($this->model->update($id, $users)):				
-				$users->id = $id;
+			if($this->model->update($id, $orders)):				
+				$orders->id = $id;
 				$json = array(
 					"status" => 200,
 					"message" => 'successfull',
-					"data"=>$users
+					"data"=>$orders
 				);
 				return $this->respondUpdated($json);
 			else:
@@ -226,7 +189,7 @@ class Users extends ResourceController
 			$json = array(
 				"status" => 404,
 				"message" => $e,
-				"data"=>$users
+				"data"=>$orders
 			);
 	
 			return $this->respond($json);
@@ -246,9 +209,9 @@ class Users extends ResourceController
 				return $this->respond($json);
 			}
 
-			$usersVerified = $this->model->find($id);
+			$ordersVerified = $this->model->find($id);
 
-			if ($usersVerified == null) {
+			if ($ordersVerified == null) {
 				$json = array(
 					"status" => 404,
 					"message" => 'Record with Id not found '. $id,
@@ -261,7 +224,7 @@ class Users extends ResourceController
 				$json = array(
 					"status" => 200,
 					"message" => 'Registry removed successfully.',
-					"data"=>$users
+					"data"=>$orders
 				);
 				return $this->respondDeleted($json);
 			else:
@@ -278,7 +241,7 @@ class Users extends ResourceController
 			$json = array(
 				"status" => 404,
 				"message" => $e,
-				"data"=>$users
+				"data"=>$orders
 			);
 	
 			return $this->respond($json);

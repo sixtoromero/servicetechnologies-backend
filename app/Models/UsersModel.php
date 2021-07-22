@@ -12,7 +12,7 @@ class UsersModel extends Model {
 
     protected $useTimestamps    = true;
     protected $createdField     = 'created_at';
-    protected $updateField     = 'update_at';
+    protected $updateField      = 'update_at';
     
     //Para que las validaciones sean obligatorias
     protected $skipValidation = false;
