@@ -69,6 +69,11 @@ class Auth extends BaseController
             'aud' => base_url(),
             'iat' => $time, //como entero el tiempo, 
             'exp' => $time + 60, //como entero cuando expira el token
+            'data' => [
+                'names' => $user["names"],
+                'surnames' => $user["surnames"],
+                'email' => $user["email"]
+            ]
         ];
 
         $jwt = JWT::encode($payload, $key);

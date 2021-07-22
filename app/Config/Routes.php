@@ -36,7 +36,7 @@ $routes->get('/', 'Home::index');
 
 $routes->post('/auth/login', 'Auth::login');
 
-$routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){	
+$routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){
 	$routes->get('users', 'Users::index');
 	$routes->post('users/craete', 'Users::create');
 	$routes->get('users/FindById/(:num)', 'Users::FindById/$1');
