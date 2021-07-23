@@ -1,5 +1,7 @@
 <?php namespace App\Controllers;
 
+session_start();
+
 use CodeIgniter\API\ResponseTrait;
 use App\Models\UsersModel;
 use Config\Services;
@@ -7,7 +9,7 @@ use Firebase\JWT\JWT;
 
 class Auth extends BaseController
 {
-    use ResponseTrait;
+    use ResponseTrait;    
 
     public function __construct() {
         helper('secure_password');
@@ -26,11 +28,12 @@ class Auth extends BaseController
 		try {            
 
             //Si funciona
-            // $users = $this->request->getJSON();
-            // return $this->respond($users);
+            $users = $this->request->getJSON();
+            
 
-            $email = $this->request->getPost('email');
-            $password = $this->request->getPost('password');
+            
+            $email = $users->email; // $this->request->getPost('email');
+            $password = $users->password;//$this->request->getPost('password');
                         
             $usersModel = new UsersModel();
             //$where = ['email' => $email, 'password' => $password];            
@@ -42,11 +45,27 @@ class Auth extends BaseController
             }
 
             if (verifyPassword($password, $validateUser["password"])):
-                $jwt = $this->generateJWT($validateUser);
-                return $this->respond(['token' => $jwt], 201);
-                //return $this->respond($validateUser);
+                
+                $json = array(
+                    "status" => 200,
+                    "message" => '',
+                    "data"=>$validateUser
+                );
+        
+                $_SESSION['user'] = (int)$validateUser["id"];
+
+                return $this->respond($json);
+                // $jwt = $this->generateJWT($validateUser);
+                // return $this->respond(['token' => $jwt], 201);                
             else:
-                return $this->failValidationError('Incorrect password');
+                $json = array(
+                    "status" => 401,
+                    "message" => 'Incorrect username or password',
+                    "data"=>null
+                );
+        
+                return $this->respond($json);
+                //return $this->failValidationError('Incorrect password');
             endif;
 
 

@@ -47,10 +47,11 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){
 	$routes->get('orders', 'Orders::index');
 	$routes->post('orders/create', 'Orders::create');
 	$routes->get('orders/FindById/(:num)', 'orders::FindById/$1');
+	$routes->get('orders/FindByUserId/(:num)', 'orders::FindByUserId/$1');
 
 	//Invoices
 	$routes->get('invoices', 'Invoices::index');
-	$routes->post('invoices/create', 'Invoices::create');
+	$routes->post('invoices/create', 'Invoices::create');	
 	
 
 });

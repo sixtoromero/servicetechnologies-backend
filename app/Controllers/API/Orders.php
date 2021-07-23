@@ -1,6 +1,9 @@
 <?php namespace App\Controllers\API;
 
+session_start();
+
 use App\Models\OrdersModel;
+use App\Models\UsersModel;
 use CodeIgniter\RESTful\ResourceController;
 
 class Orders extends ResourceController
@@ -25,6 +28,9 @@ class Orders extends ResourceController
 		try {
 						
 			$orders = $this->request->getJSON();
+			
+			$orders->user_id = $_SESSION['user'];
+			$orders->date = date("Y-m-d");			
 
 			if ($this->model->insert($orders)):
 				$orders->id = $this->model->insertID();
@@ -52,7 +58,7 @@ class Orders extends ResourceController
 				"message" => 'Ha ocurrido un error',
 				"data"=>null
 			);
-			return $this->respond($json);			
+			return $this->respond($json);
 			//return $this->failServerError('Ha ocurrido un error');
 		}
 	}	
@@ -72,6 +78,93 @@ class Orders extends ResourceController
 			}
 
 			$orders = $this->model->find($id);
+
+			if ($orders == null) {
+				$json = array(
+					"status" => 404,
+					"message" => 'Record with Id not found '. $id,
+					"data"=> null
+				);					
+				return $this->respond($json);
+			}
+
+			$json = array(
+				"status" => 200,
+				"message" => 'Found record',
+				"data"=>$orders
+			);
+	
+			return $this->respond($json);
+
+		}
+		catch (\Exception $e) {
+			$json = array(
+				"status" => 404,
+				"message" => $e,
+				"data"=>$orders
+			);
+	
+			return $this->respond($json);
+		}
+	}	
+
+	public function FindByUserId($user_id = null){
+		try {
+			
+			$modelUser =  new UsersModel();
+			
+			if ($user_id == null)
+			{
+				$json = array(
+					"status" => 404,
+					"message" => 'A valid Id has not been passed',
+					"data"=> null
+				);
+					
+				return $this->respond($json);				
+			}
+
+			$user = $modelUser->find($user_id);						
+
+			if ($user == null) {
+				$json = array(
+					"status" => 404,
+					"message" => 'Record with Id not found '. $id,
+					"data"=> null
+				);					
+				return $this->respond($json);
+			}
+
+			$orders = $this->model->FindByUserId($user_id);
+
+			$json = array(
+				"status" => 200,
+				"message" => 'Found record',
+				"data"=>$orders
+			);
+	
+			return $this->respond($json);			
+
+		} catch (\Exception $e) {
+			return $this->failServerError('Ha ocurrido un error en el servidor');
+		}
+	}
+
+	public function FindByUserId_($user_id = null){
+		try {		
+
+			if ($user_id == null) {
+				$json = array(
+					"status" => 404,
+					"message" => 'A valid Id has not been passed',
+					"data"=> null
+				);
+					
+				return $this->respond($json);
+			}
+			
+			$ordersModel = new OrdersModel();
+			$orders = $ordersModel->where('user_id', (int)$user_id)->orderBy('id', 'asc')->findAll();			
 
 			if ($orders == null) {
 				$json = array(
