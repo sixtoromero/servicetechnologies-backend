@@ -11,14 +11,25 @@ class OrdersModel extends Model {
     protected $allowedFields    = ['user_id', 'status', 'date'];    
 
     public function FindByUserId($user_id = null){
-		$builder = $this->db->table($this->table);
-        $builder->select('orders.status, orders.id, users.names, users.surnames');
-        $builder->join('users', 'orders.user_id = users.id');
-        $builder->where('users.id', $user_id);
+      $builder = $this->db->table($this->table);
+      $builder->select('orders.status, orders.id, users.names, users.surnames');
+      $builder->join('users', 'orders.user_id = users.id');
+      $builder->where('users.id', $user_id);
 
-        $query = $builder->get();
-        return $query->getResult();
-
+      $query = $builder->get();
+      return $query->getResult();
 	}
+
+//   public function FindByInvoiceByOrderId($user_id = null){
+//     $builder = $this->db->table($this->table);
+//     $builder->select('orders.status, orders.id, users.names, users.surnames');
+//     $builder->join('invoices', 'orders.user_id = users.id');
+//     $builder->where('users.id', $user_id);
+
+//     $query = $builder->get();
+//     return $query->getResult();
+// }
+
+
 
 }

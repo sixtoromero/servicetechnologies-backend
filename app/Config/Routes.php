@@ -46,8 +46,9 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){
 	//Orders
 	$routes->get('orders', 'Orders::index');
 	$routes->post('orders/create', 'Orders::create');
-	$routes->get('orders/FindById/(:num)', 'orders::FindById/$1');
-	$routes->get('orders/FindByUserId/(:num)', 'orders::FindByUserId/$1');
+	$routes->get('orders/FindById/(:num)', 'Orders::FindById/$1');
+	$routes->get('orders/FindByUserId/(:num)', 'Orders::FindByUserId/$1');
+	$routes->delete('orders/delete/(:num)', 'Orders::delete/$1');
 
 	//Invoices
 	$routes->get('invoices', 'Invoices::index');

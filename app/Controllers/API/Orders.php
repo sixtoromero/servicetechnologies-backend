@@ -4,6 +4,9 @@ session_start();
 
 use App\Models\OrdersModel;
 use App\Models\UsersModel;
+use App\Models\InvoicesModel;
+use App\Models\PaymentsModel;
+
 use CodeIgniter\RESTful\ResourceController;
 
 class Orders extends ResourceController
@@ -302,7 +305,7 @@ class Orders extends ResourceController
 				return $this->respond($json);
 			}
 
-			$ordersVerified = $this->model->find($id);
+			$ordersVerified = $this->model->find($id);			
 
 			if ($ordersVerified == null) {
 				$json = array(
@@ -313,11 +316,33 @@ class Orders extends ResourceController
 				return $this->respond($json);
 			}						
 			
+			//Validando que no tenga pagos las facturas.
+			//Se consulta la factura que tiene asociada la Orden
+			$invoicesModel = new InvoicesModel();						
+
+			$invoiceVerified = $invoicesModel->where('id', $id)->first();						
+			
+
+			if ($invoiceVerified != null) {
+				$paymentsModel = new PaymentsModel();
+				$paymentsVerified = $paymentsModel->where('invoice_id', (int)$invoiceVerified["id"])->first();				
+
+				if ($paymentsVerified != null){
+					$json = array(
+						"status" => 404,
+						"message" => 'The Order cannot be deleted, because it already has payments made.',
+						"data"=> null
+					);
+						
+					return $this->respond($json);
+				}
+			}
+
 			if	($this->model->delete($id)):
 				$json = array(
 					"status" => 200,
 					"message" => 'Registry removed successfully.',
-					"data"=>$orders
+					"data"=>null
 				);
 				return $this->respondDeleted($json);
 			else:
