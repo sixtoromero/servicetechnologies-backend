@@ -52,7 +52,12 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){
 	//Invoices
 	$routes->get('invoices', 'Invoices::index');
 	$routes->post('invoices/create', 'Invoices::create');	
+	$routes->put('invoices/update/(:num)', 'Invoices::update/$1');
 	
+	//Payments
+	$routes->get('payments', 'Payments::index');
+	$routes->get('payments/FindById/(:num)', 'Payments::FindById/$1');	
+
 
 });
 

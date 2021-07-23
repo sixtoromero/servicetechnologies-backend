@@ -1,12 +1,13 @@
 <?php namespace App\Controllers\API;
 
+use App\Models\PaymentsModel;
 use App\Models\InvoicesModel;
 use CodeIgniter\RESTful\ResourceController;
 
-class Invoices extends ResourceController
+class Payments extends ResourceController
 {
     public function __construct() {
-        $this->model = $this->setModel(new InvoicesModel());
+        $this->model = $this->setModel(new PaymentsModel());
     }
 
 	public function index()
@@ -24,23 +25,29 @@ class Invoices extends ResourceController
 	public function create(){
 		try {
 						
-			$invoices = $this->request->getJSON();
-			$invoices->amounttopay = rand(10, 20);
+			$payments = $this->request->getJSON();									
 			
 			$invoicesModel = new InvoicesModel();
-						
-			$invoiceVerified = $invoicesModel->where('order_id', $invoices->order_id)->first();			
+			$invoiceVerified = $invoicesModel->where('id', $payments->invoice_id)->first();
+			$payments->date = date("Y-m-d");
+			
 
-			if ($invoiceVerified == null){
-				if ($this->model->insert($invoices)):
-					$invoices->id = $this->model->insertID();
-					
+			if ($invoiceVerified != null){
+				
+				$amountpaid = (int)$invoiceVerified["amountpaid"];
+				$amountpaid = $amountpaid + (int)$payments->amount;
+				$invoiceVerified["amountpaid"] = $amountpaid;
+
+				if ($this->model->insert($payments)):
+					$payments->id = $this->model->insertID();															
+
 					$json = array(
 						"status" => 201,
 						"message" => 'successfull',
-						"data"=>$invoices
+						"data"=>$payments
 					);
 					return $this->respondCreated($json);
+					//Actualizar el modelo de Invoices															
 				else:				
 					$json = array(
 						"status" => 500,
@@ -54,7 +61,7 @@ class Invoices extends ResourceController
 			} else {
 				$json = array(
 					"status" => 400,
-					"message" => 'The order already has an associated invoice.',
+					"message" => 'The invoice does not exist',
 					"data"=>null
 				);
 		
@@ -86,9 +93,12 @@ class Invoices extends ResourceController
 				return $this->respond($json);
 			}
 
-			$invoices = $this->model->find($id);
+			//$ordersModel = new OrdersModel();
+			//$orders = $ordersModel->where('user_id', (int)$user_id)->orderBy('id', 'asc')->findAll();
+			$payments = $this->model->where('invoice_id', (int)$id)->orderBy('id', 'asc')->findAll();
+			//$invoices = $this->model->find($id);
 
-			if ($invoices == null) {
+			if ($payments == null) {
 				$json = array(
 					"status" => 200,
 					"message" => 'Record with Id not found '. $id,
@@ -100,7 +110,7 @@ class Invoices extends ResourceController
 			$json = array(
 				"status" => 200,
 				"message" => 'Found record',
-				"data"=>$invoices
+				"data"=>$payments
 			);
 	
 			return $this->respond($json);
@@ -177,17 +187,14 @@ class Invoices extends ResourceController
 					"data"=> null
 				);
 				return $this->respond($json);
-			}
+			}						
 
 			$invoices = $this->request->getJSON();			
 
-			$invoicesVerified["amountpaid"] = (int)$invoices->amountpaid;			
-
-			if($this->model->update($id, $invoicesVerified)):
+			if($this->model->update($id, $invoices)):				
 				$invoices->id = $id;
-
 				$json = array(
-					"status" => 201,
+					"status" => 200,
 					"message" => 'successfull',
 					"data"=>$invoices
 				);
