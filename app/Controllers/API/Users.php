@@ -4,8 +4,6 @@
 // Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
 // Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
 
-header("Access-Control-Allow-Headers: Origin,X-Requested-With,Content-Type,Accept,Access-Control-Request-Method,Authorization,Cache-Control");
-
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\UsersModel;
 
@@ -18,6 +16,8 @@ class Users extends ResourceController
 
 	public function index()
 	{
+		header("Access-Control-Allow-Origin: *");
+
 		$users = $this->model->findAll();
 		$json = array(
 			"status" => 200,
@@ -30,6 +30,8 @@ class Users extends ResourceController
 
 	public function create(){
 		
+		header("Access-Control-Allow-Origin: *");
+
 		$validation =  \Config\Services::validation();
 
 		try {
@@ -102,6 +104,7 @@ class Users extends ResourceController
 
 
 	public function FindById($id = null){
+		header("Access-Control-Allow-Origin: *");
 		try {
 
 			if ($id == null) {
@@ -146,6 +149,7 @@ class Users extends ResourceController
 	}
 
 	public function edit($id = null) {
+		header("Access-Control-Allow-Origin: *");
 		try {
 			if ($id == null) {
 				$json = array(
@@ -184,6 +188,7 @@ class Users extends ResourceController
 	}
 
 	public function update($id = null){
+		header("Access-Control-Allow-Origin: *");
 		try {
 
 			if ($id == null) {
@@ -240,6 +245,7 @@ class Users extends ResourceController
 	}
 
 	public function delete($id = null){
+		header("Access-Control-Allow-Origin: *");
 		try {
 
 			if ($id == null) {

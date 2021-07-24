@@ -4,8 +4,6 @@
 // Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
 // Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
 
-header("Access-Control-Allow-Headers: Origin,X-Requested-With,Content-Type,Accept,Access-Control-Request-Method,Authorization,Cache-Control");
-
 session_start();
 
 use CodeIgniter\API\ResponseTrait;
@@ -23,6 +21,8 @@ class Auth extends BaseController
 
 	public function login()
 	{
+        header("Access-Control-Allow-Origin: *");
+        
         // $email = $this->request->getPost('email');
         // $password = $this->request->getPost('password');
 

@@ -4,8 +4,6 @@
 // Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
 // Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
 
-header("Access-Control-Allow-Headers: Origin,X-Requested-With,Content-Type,Accept,Access-Control-Request-Method,Authorization,Cache-Control");
-
 use App\Models\InvoicesModel;
 use App\Models\PaymentsModel;
 use CodeIgniter\RESTful\ResourceController;
@@ -18,6 +16,8 @@ class Invoices extends ResourceController
 
 	public function index()
 	{
+		header("Access-Control-Allow-Origin: *");
+		
 		$invoices = $this->model->findAll();
 		$json = array(
 			"status" => 200,
