@@ -178,43 +178,48 @@ class Payments extends ResourceController
 				return $this->respond($json);
 			}
 
-			$invoicesVerified = $this->model->find($id);
+			$paymentVerified = $this->model->find($id);
 
-			if ($invoicesVerified == null) {
+			if ($paymentVerified == null) {
 				$json = array(
 					"status" => 404,
 					"message" => 'Record with Id not found '. $id,
 					"data"=> null
 				);
 				return $this->respond($json);
-			}						
+			}
 
-			$invoices = $this->request->getJSON();			
-
-			if($this->model->update($id, $invoices)):				
-				$invoices->id = $id;
+			$payments = $this->request->getJSON();
+			
+			$paymentVerified["amount"] = (int)$payments->amount;
+			$paymentVerified["date"] = date("Y-m-d");
+						
+			if($this->model->update($id, $paymentVerified)){								
+				
 				$json = array(
 					"status" => 200,
 					"message" => 'successfull',
-					"data"=>$invoices
+					"data"=>$paymentVerified
 				);
+
 				return $this->respondUpdated($json);
-			else:
+
+			}
+			else{
 				$json = array(
 					"status" => 404,
 					"message" => 'The record could not be updated please try again',
 					"data"=> null
 				);
 					
-				return $this->respond($json);
-				//return $this->failValidationError($this->model->validation->listErros());
-			endif;
+				return $this->respond($json);				
+			}
 		}
 		catch (\Exception $e) {
 			$json = array(
 				"status" => 404,
-				"message" => $e,
-				"data"=>$invoices
+				"message" => 'Ha ocurrido un error',
+				"data"=>null
 			);
 	
 			return $this->respond($json);

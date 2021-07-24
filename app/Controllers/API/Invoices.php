@@ -1,6 +1,7 @@
 <?php namespace App\Controllers\API;
 
 use App\Models\InvoicesModel;
+use App\Models\PaymentsModel;
 use CodeIgniter\RESTful\ResourceController;
 
 class Invoices extends ResourceController
@@ -86,7 +87,9 @@ class Invoices extends ResourceController
 				return $this->respond($json);
 			}
 
-			$invoices = $this->model->find($id);
+			//$invoices = $this->model->find($id);
+			//$invoicesModel = new InvoicesModel();
+			$invoices = $this->model->where('order_id', $id)->first();
 
 			if ($invoices == null) {
 				$json = array(
@@ -188,6 +191,73 @@ class Invoices extends ResourceController
 
 				$json = array(
 					"status" => 201,
+					"message" => 'successfull',
+					"data"=>$invoices
+				);
+				return $this->respondUpdated($json);
+			else:
+				$json = array(
+					"status" => 404,
+					"message" => 'The record could not be updated please try again',
+					"data"=> null
+				);
+					
+				return $this->respond($json);
+				//return $this->failValidationError($this->model->validation->listErros());
+			endif;
+		}
+		catch (\Exception $e) {
+			$json = array(
+				"status" => 404,
+				"message" => $e,
+				"data"=>$invoices
+			);
+	
+			return $this->respond($json);
+		}
+	}
+
+	public function updatePayment($id = null){
+		try {
+
+			if ($id == null) {
+				$json = array(
+					"status" => 404,
+					"message" => 'A valid Id has not been passed',
+					"data"=> null
+				);
+					
+				return $this->respond($json);
+			}
+
+			$invoicesVerified = $this->model->find($id);
+
+			if ($invoicesVerified == null) {
+				$json = array(
+					"status" => 404,
+					"message" => 'Record with Id not found '. $id,
+					"data"=> null
+				);
+				return $this->respond($json);
+			}
+
+			//$invoices = $this->request->getJSON();					
+
+			//Consultar los pagos de la factura.
+			$paymentsModel = new PaymentsModel();			
+			$payments = $paymentsModel->where('invoice_id', $id)->orderBy('id', 'asc')->findAll();
+			$mountSum = 0;
+			foreach ($payments as $pay){
+				$mountSum = $mountSum + $pay['amount'];
+			}
+			
+			$invoicesVerified["amountpaid"] = $mountSum;			
+
+
+			if($this->model->update($id, $invoicesVerified)):
+
+				$json = array(
+					"status" => 200,
 					"message" => 'successfull',
 					"data"=>$invoices
 				);

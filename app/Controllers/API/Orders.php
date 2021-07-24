@@ -32,7 +32,7 @@ class Orders extends ResourceController
 						
 			$orders = $this->request->getJSON();
 			
-			$orders->user_id = $_SESSION['user'];
+			//$orders->user_id = $_SESSION['user'];			
 			$orders->date = date("Y-m-d");			
 
 			if ($this->model->insert($orders)):
@@ -292,6 +292,84 @@ class Orders extends ResourceController
 		}
 	}
 
+	public function closeOrder($id = null){
+		try {
+
+			if ($id == null) {
+				$json = array(
+					"status" => 404,
+					"message" => 'A valid Id has not been passed',
+					"data"=> null
+				);
+					
+				return $this->respond($json);
+			}
+
+			$ordersVerified = $this->model->find($id);
+
+			if ($ordersVerified == null) {
+				$json = array(
+					"status" => 404,
+					"message" => 'Record with Id not found '. $id,
+					"data"=> null
+				);
+				return $this->respond($json);
+			}
+
+			//Validar que la factura de la orden esté totalmente pagada.
+			$invoicesModel = new InvoicesModel();
+			$invoiceVerified = $invoicesModel->where('order_id', $id)->first();
+			if ($invoiceVerified == null) {
+				$json = array(
+					"status" => 404,
+					"message" => 'Record with Id not found '. $id,
+					"data"=> null
+				);
+				return $this->respond($json);
+			}
+			
+			if ((int)$invoiceVerified["amounttopay"] != (int)$invoiceVerified["amountpaid"]){
+				$json = array(
+					"status" => 404,
+					"message" => 'The Order cannot be closed because it still has pending payments ',
+					"data"=> null
+				);
+				return $this->respond($json);
+			}
+
+			//$orders = $this->request->getJSON();
+			$ordersVerified["status"] = "Closed";			
+
+			if($this->model->update($id, $ordersVerified)):
+				//$ordersVerified->id = $id;
+				$json = array(
+					"status" => 200,
+					"message" => 'successfull',
+					"data"=>$ordersVerified
+				);
+				return $this->respondUpdated($json);
+			else:
+				$json = array(
+					"status" => 404,
+					"message" => 'The record could not be updated please try again',
+					"data"=> null
+				);
+					
+				return $this->respond($json);
+				//return $this->failValidationError($this->model->validation->listErros());
+			endif;
+		}
+		catch (\Exception $e) {
+			$json = array(
+				"status" => 404,
+				"message" => $e,
+				"data"=>$orders
+			);
+	
+			return $this->respond($json);
+		}
+	}
+
 	public function delete($id = null){
 		try {
 
@@ -318,9 +396,8 @@ class Orders extends ResourceController
 			
 			//Validando que no tenga pagos las facturas.
 			//Se consulta la factura que tiene asociada la Orden
-			$invoicesModel = new InvoicesModel();						
-
-			$invoiceVerified = $invoicesModel->where('id', $id)->first();						
+			$invoicesModel = new InvoicesModel();
+			$invoiceVerified = $invoicesModel->where('order_id', $id)->first();
 			
 
 			if ($invoiceVerified != null) {
