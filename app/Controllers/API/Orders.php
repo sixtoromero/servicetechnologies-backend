@@ -21,7 +21,7 @@ class Orders extends ResourceController
 
 	public function index()
 	{
-		header("Access-Control-Allow-Origin: *");
+		
 
 		$orders = $this->model->findAll();
 		$json = array(
@@ -34,7 +34,7 @@ class Orders extends ResourceController
 	}
 
 	public function create(){
-		header("Access-Control-Allow-Origin: *");
+		
 		try {
 						
 			$orders = $this->request->getJSON();
@@ -75,7 +75,7 @@ class Orders extends ResourceController
 
 
 	public function FindById($id = null){
-		header("Access-Control-Allow-Origin: *");
+		
 		try {
 
 			if ($id == null) {
@@ -120,7 +120,7 @@ class Orders extends ResourceController
 	}	
 
 	public function FindByUserId($user_id = null){
-		header("Access-Control-Allow-Origin: *");
+		
 		try {
 			
 			$modelUser =  new UsersModel();
@@ -163,7 +163,7 @@ class Orders extends ResourceController
 	}
 
 	public function FindByUserIdAndOrders($user_id = null){
-		header("Access-Control-Allow-Origin: *");
+		
 		try {
 			
 			$modelUser =  new UsersModel();
@@ -206,7 +206,7 @@ class Orders extends ResourceController
 	}
 
 	public function FindByOrderId($order_id = null){
-		header("Access-Control-Allow-Origin: *");
+		
 		try {
 			$orders = $this->model->FindByOrderId($order_id);
 
@@ -233,7 +233,7 @@ class Orders extends ResourceController
 	}
 
 	public function FindOrderAll(){
-		header("Access-Control-Allow-Origin: *");
+		
 		try {
 			$orders = $this->model->FindOrderAll();
 
@@ -260,7 +260,7 @@ class Orders extends ResourceController
 	}
 
 	public function FindByUserId_($user_id = null){
-		header("Access-Control-Allow-Origin: *");
+		
 		try {		
 
 			if ($user_id == null) {
@@ -306,7 +306,7 @@ class Orders extends ResourceController
 	}
 
 	public function edit($id = null) {
-		header("Access-Control-Allow-Origin: *");
+		
 		try {
 			if ($id == null) {
 				$json = array(
@@ -345,7 +345,7 @@ class Orders extends ResourceController
 	}
 
 	public function update($id = null){
-		header("Access-Control-Allow-Origin: *");
+		
 		try {
 
 			if ($id == null) {
@@ -402,7 +402,7 @@ class Orders extends ResourceController
 	}
 
 	public function closeOrder($id = null){
-		header("Access-Control-Allow-Origin: *");
+		
 		try {
 
 			if ($id == null) {
@@ -481,7 +481,7 @@ class Orders extends ResourceController
 	}
 
 	public function delete($id = null){
-		header("Access-Control-Allow-Origin: *");
+		
 		try {
 
 			if ($id == null) {
