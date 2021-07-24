@@ -1,5 +1,8 @@
 <?php namespace App\Controllers\API;
 
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET, OPTIONS");
+
 use App\Models\InvoicesModel;
 use App\Models\PaymentsModel;
 use CodeIgniter\RESTful\ResourceController;

@@ -1,5 +1,8 @@
 <?php namespace App\Controllers\API;
 
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: GET, OPTIONS");
+
 session_start();
 
 use App\Models\OrdersModel;

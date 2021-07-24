@@ -61,7 +61,7 @@ class Security extends BaseConfig
 	 *
 	 * @var boolean
 	 */
-	public $regenerate = false;
+	public $regenerate = true;
 
 	/**
 	 * --------------------------------------------------------------------------
