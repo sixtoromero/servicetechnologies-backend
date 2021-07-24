@@ -221,6 +221,32 @@ class Orders extends ResourceController
 		}
 	}
 
+	public function FindOrderAll(){
+		try {
+			$orders = $this->model->FindOrderAll();
+
+			if ($orders == null) {
+				$json = array(
+					"status" => 404,
+					"message" => 'Record with Id not found ',
+					"data"=> null
+				);					
+				return $this->respond($json);
+			}
+
+			$json = array(
+				"status" => 200,
+				"message" => 'Found record',
+				"data"=>$orders
+			);
+	
+			return $this->respond($json);
+
+		} catch (\Exception $e) {
+			return $this->failServerError('Ha ocurrido un error en el servidor');
+		}
+	}
+
 	public function FindByUserId_($user_id = null){
 		try {		
 

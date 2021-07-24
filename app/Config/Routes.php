@@ -51,7 +51,8 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){
 	$routes->delete('orders/delete/(:num)', 'Orders::delete/$1');
 	$routes->put('orders/closeOrder/(:num)', 'Orders::closeOrder/$1');
 	$routes->get('orders/FindByUserIdAndOrders/(:num)', 'Orders::FindByUserIdAndOrders/$1');
-	$routes->get('orders/FindByOrderId/(:num)', 'Orders::FindByOrderId/$1');
+	$routes->get('orders/FindByOrderId/(:num)', 'Orders::FindByOrderId/$1');	
+	$routes->get('orders/FindOrderAll', 'Orders::FindOrderAll');
 	
 
 	//Invoices

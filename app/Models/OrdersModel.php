@@ -42,6 +42,16 @@ class OrdersModel extends Model {
       return $query->getResult();
 	  }
 
+    public function FindOrderAll(){
+      $builder = $this->db->table($this->table);
+      $builder->select('orders.status, orders.id, users.names, users.surnames, invoices.id as invoice_id, invoices.amounttopay, invoices.amountpaid');
+      $builder->join('users', 'orders.user_id = users.id');
+      $builder->join('invoices', 'orders.id = invoices.order_id');      
+
+      $query = $builder->get();
+      return $query->getResult();
+	  }
+
 //   public function FindByInvoiceByOrderId($user_id = null){
 //     $builder = $this->db->table($this->table);
 //     $builder->select('orders.status, orders.id, users.names, users.surnames');
