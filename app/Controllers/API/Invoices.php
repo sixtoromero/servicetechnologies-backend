@@ -1,8 +1,10 @@
 <?php namespace App\Controllers\API;
 
-Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
-Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
-Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
+// Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
+// Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
+// Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
+
+header("Access-Control-Allow-Headers: Origin,X-Requested-With,Content-Type,Accept,Access-Control-Request-Method,Authorization,Cache-Control");
 
 use App\Models\InvoicesModel;
 use App\Models\PaymentsModel;
