@@ -53,15 +53,16 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){
 
 	//Invoices
 	$routes->get('invoices', 'Invoices::index');
-	$routes->post('invoices/create', 'Invoices::create');	
-	$routes->put('invoices/update/(:num)', 'Invoices::update/$1');	
+	$routes->post('invoices/create', 'Invoices::create');
+	$routes->put('invoices/update/(:num)', 'Invoices::update/$1');
 	$routes->put('invoices/updatePayment/(:num)', 'Invoices::updatePayment/$1');
+	$routes->delete('invoices/delete/(:num)', 'Invoices::delete/$1');
 	
 	//Payments
 	$routes->get('payments', 'Payments::index');
-	$routes->get('payments/FindById/(:num)', 'Payments::FindById/$1');	
+	$routes->get('payments/FindById/(:num)', 'Payments::FindById/$1');
 	$routes->put('payments/update/(:num)', 'Payments::update/$1');
-
+	$routes->delete('payments/delete/(:num)', 'Payments::delete/$1');
 
 });
 

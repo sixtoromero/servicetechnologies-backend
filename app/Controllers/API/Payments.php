@@ -235,7 +235,7 @@ class Payments extends ResourceController
 					"message" => 'A valid Id has not been passed',
 					"data"=> null
 				);
-					
+
 				return $this->respond($json);
 			}
 
@@ -248,9 +248,10 @@ class Payments extends ResourceController
 					"data"=> null
 				);
 				return $this->respond($json);
-			}						
+			}
 			
 			if	($this->model->delete($id)):
+
 				$json = array(
 					"status" => 200,
 					"message" => 'Registry removed successfully.',
