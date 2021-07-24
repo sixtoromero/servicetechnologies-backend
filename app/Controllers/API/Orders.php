@@ -153,6 +153,74 @@ class Orders extends ResourceController
 		}
 	}
 
+	public function FindByUserIdAndOrders($user_id = null){
+		try {
+			
+			$modelUser =  new UsersModel();
+			
+			if ($user_id == null)
+			{
+				$json = array(
+					"status" => 404,
+					"message" => 'A valid Id has not been passed',
+					"data"=> null
+				);
+					
+				return $this->respond($json);				
+			}
+
+			$user = $modelUser->find($user_id);						
+
+			if ($user == null) {
+				$json = array(
+					"status" => 404,
+					"message" => 'Record with Id not found '. $id,
+					"data"=> null
+				);					
+				return $this->respond($json);
+			}
+
+			$orders = $this->model->FindByUserIdAndOrders($user_id);
+
+			$json = array(
+				"status" => 200,
+				"message" => 'Found record',
+				"data"=>$orders
+			);
+	
+			return $this->respond($json);			
+
+		} catch (\Exception $e) {
+			return $this->failServerError('Ha ocurrido un error en el servidor');
+		}
+	}
+
+	public function FindByOrderId($order_id = null){
+		try {
+			$orders = $this->model->FindByOrderId($order_id);
+
+			if ($orders == null) {
+				$json = array(
+					"status" => 404,
+					"message" => 'Record with Id not found '. $order_id,
+					"data"=> null
+				);					
+				return $this->respond($json);
+			}
+
+			$json = array(
+				"status" => 200,
+				"message" => 'Found record',
+				"data"=>$orders
+			);
+	
+			return $this->respond($json);
+
+		} catch (\Exception $e) {
+			return $this->failServerError('Ha ocurrido un error en el servidor');
+		}
+	}
+
 	public function FindByUserId_($user_id = null){
 		try {		
 
