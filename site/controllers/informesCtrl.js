@@ -45,7 +45,7 @@ app.controller('informesCtrl', ['$scope', '$http', function($scope, $http){
         $scope.isPayment = false;
 
         if ($scope.userId == 0) {            
-            $http.get($scope.urlAPI + 'orders/FindOrderAll/').success(function(data){
+            $http.get($scope.urlAPI + 'orders/FindOrderAll').success(function(data){
                 if (data.status == 200)  {
                     $scope.orders = data.data;
                 }else {
