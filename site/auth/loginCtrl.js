@@ -12,7 +12,7 @@ app.controller('loginCtrl', ['$scope','$http', function($scope,$http){
             //console.log(data);
             if (data['status'] === 200){                
                 localStorage.setItem('user', JSON.stringify(data['data']));
-                window.location = "/site/orders";
+                window.location = "/site/index.html";
             } else {
                 localStorage.clear();
                 swal("Orders!", data.message, "info");
