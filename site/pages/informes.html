@@ -43,7 +43,7 @@
             <td>{{order.amounttopay}}</td>
             <td>{{order.amountpaid}}</td>			
             <td>
-                <a href="" ng-click="viewPayments(order.invoice_id, order.id)">Payments</a>
+                <a href="" ng-show="order.status == 'Open'" ng-click="viewPayments(order.invoice_id, order.id)">Payments</a>
             </td>
 		</tr>
 	</table>    
