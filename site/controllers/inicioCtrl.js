@@ -238,7 +238,6 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 	$scope.editPayment = function(item) {
 		if ($scope.status == 'Open') {
 						
-
 			var amountPay = prompt('Enter a new value.', item.amount);
 
 			if (amountPay != null) {
@@ -246,10 +245,12 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 				var amountVerify = item.amount;
 				item.amount = amountPay;				
 
+				$scope.paymentSum = 0;
+
 				$scope.payments.forEach(item => {
 					$scope.paymentSum = $scope.paymentSum + (+item.amount);
 				});
-
+				
 				if ($scope.paymentSum > +$scope.invoiceSel["amounttopay"]) {
 					item.amount = amountVerify;
 					alert('Value to pay is greater than the total invoice value.');
