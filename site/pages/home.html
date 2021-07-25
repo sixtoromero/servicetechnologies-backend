@@ -1,0 +1,119 @@
+<div class="row" align="right">	
+	<button class="btn btn-info" ng-disabled="isEnable" ng-click="createOrder()">
+		Add Order
+	</button>	
+	<br><br>
+</div>
+
+<div class="row">
+	<table class="table table-striped">
+		<tr>
+			<th>Status</th>
+			<th>Orden Number</th>
+			<th>Client</th>
+			<th>Invoices</th>
+			<th>Actions</th>
+		</tr>
+		<tr ng-repeat="order in orders | limitTo: posicion | limitTo: -5">
+			<td>{{order.status}}</td>
+			<td>Order{{order.id}}</td>
+			<td>{{order.names}} {{order.surnames}}</td>
+			<td><a href="" ng-click="getInvoicesExists(order.id, order.status);">Show Invoice</a></td>
+			<td>
+				<table>
+					<tr>						
+						<td>
+							<a href="" ng-click="deleteOrder(order.id)">Delete&nbsp;&nbsp;</a>
+						</td>
+						<td>
+							<a href="" ng-click="closeOrder(order.id)">Close&nbsp;&nbsp;</a>
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	
+	<button class="btn btn-primary" ng-click="anteriores()" ng-disabled="isBtnOrder"><</button>
+	<button class="btn btn-primary" ng-click="siguiente()" ng-disabled="isBtnOrder">></button>
+	<br>
+	<br>
+	
+	<label ng-show="isInvoice">Invoice Order {{ orderId }}</label>	
+	<table class="table table-striped" ng-show="isInvoice">
+		<tr>
+			<th>Amount To Pay</th>
+			<th>Amount Paid</th>
+			<th>Reamin Amount</th>
+			<th>Payments</th>
+		</tr>
+		<tr>
+			<td>{{invoice.amounttopay | currency}}</td>
+			<td>{{invoice.amountpaid | currency}}</td>
+			<td>{{remainamount | currency }}</td>
+			<td><a href="" ng-click="getPayments(invoice.id)">Show Payments</a></td>
+		</tr>
+	</table>
+	<br>
+	<br>	
+	<br>
+	<table style="width: 100%;" ng-show="isPayment">
+		<tr>
+			<td>
+				Payment Order {{ orderId }}
+			</td>
+			<td style="text-align: right;">				
+				<!-- ng-click="showAlertAddPayment()" -->
+				<!-- <button class="btn btn-info" ng-disabled="isEnable" data-toggle="modal" data-target="#myModal">
+					Add Payment
+				</button> -->
+
+				<button type="button" class="btn btn-info" ng-click="addPayment()"">Add Payment</button>
+			</td>
+		</tr>
+		<tr>						
+			<td colspan="2">
+				<table class="table table-striped">
+					<tr>
+						<th>
+							Amount
+						</th>
+						<th>
+							Date
+						</th>
+						<th>
+							Actions
+						</th>
+					</tr>
+					<tr ng-repeat="payment in payments">
+						<td>
+							{{payment.amount | currency }}
+						</td>
+						<td>
+							{{payment.date | date}}
+						</td>
+						<td>
+							<table>
+								<tr>
+									<td>
+										<a href="" ng-click="editPayment(payment)">Edit&nbsp;&nbsp;</a>
+									</td>
+									<td>
+										<a href="" ng-click="deletePayment(payment)">Delete&nbsp;&nbsp;</a>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>					
+				</table>
+			</td>
+		</tr>
+	</table>
+	<!-- <div ng-show="isPayment">
+		<button class="btn btn-primary" ng-click="antPayment()" ng-disabled="isButtonDisable"><</button>
+		<button class="btn btn-primary" ng-click="sigPayment()" ng-disabled="isButtonDisable">></button>
+	</div> -->
+	
+	<br>
+	<br>		
+</div>

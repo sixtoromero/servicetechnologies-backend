@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"  ng-app="loginApp" ng-controller="loginCtrl"> 
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Incluir Bootstrap -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+
+    <!-- Incluir AngularJS -->
+    <script src="../js/lib/angular.min.js"></script>
+    <script src="../js/lib/angular-route.min.js"></script>
+    
+    <script src="loginCtrl.js"></script>    
+    
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
+    <style>
+        .login-container{
+            margin-top: 5%;
+            margin-bottom: 5%;
+            margin-right: 5%;
+        }
+        .login-form-1{
+            padding: 5%;            ;
+            box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+        }
+        .login-form-1 h3{
+            text-align: center;
+            color: #333;
+        }        
+        .login-container form{
+            padding: 10%;            
+        }
+        .btnSubmit
+        {
+            width: 50%;
+            border-radius: 1rem;
+            padding: 1.5%;
+            border: none;
+            cursor: pointer;
+        }
+        .login-form-1 .btnSubmit{
+            font-weight: 600;
+            color: #fff;
+            background-color: #0062cc;
+        }        
+        .login-form-1 .ForgetPwd{
+            color: #0062cc;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+    </style>        
+
+    <title>Login Orders</title>
+
+</head>
+<body>
+    <div class="container login-container" ng-show="!isCreateUser">
+        <div class="row">
+            <div class="col-md-6 login-form-1">
+                <h3>Login</h3>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="user.email" placeholder="Your Email *" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" ng-model="user.password" placeholder="Your Password *" value="" />
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" ng-click="getLogin()">Login</button>
+                        <button class="btn btn-default" ng-click="isCreateUser = true;">Register</button>
+                    </div>                    
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container login-container" ng-show="isCreateUser">
+        <div class="row">
+            <div class="col-md-6 login-form-1">
+                <h3>Register</h3>
+                <form ng-submit="registerUser()">
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="user.names" placeholder="Names *" value="" required />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="user.surnames" placeholder="Sur Names *" value=""  required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="user.email" placeholder="Your Email *" value=""  required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="user.usertype" placeholder="User Type *" value="" readonly="readonly"  required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="user.address" placeholder="Your Address*" value=""  required/>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" ng-model="user.cellphone" placeholder="Your Cellphone" value=""/>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" ng-model="user.password" placeholder="Your Password *" value=""  required/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Register</button>
+                        <button class="btn btn-primary" ng-click="isCreateUser = false;">Login</button>
+                    </div>                    
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

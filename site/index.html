@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="ordersApp" ng-controller="mainCtrl">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Orders</title>
+
+
+        <!-- Incluir Bootstrap -->
+        <!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+        <!-- Animate.css -->
+        <link rel="stylesheet" href="css/animate.css">
+
+        <link rel="stylesheet" href="fontawesome/css/fontawesome.min.css">
+
+        <!-- Estilo personalizado -->
+        <link rel="stylesheet" href="css/style.css">            
+
+        <!-- Incluir AngularJS -->
+        <script src="js/lib/angular.min.js"></script>
+        <script src="js/lib/angular-route.min.js"></script>
+
+        <!-- <script src="js/lib/jquery-3.6.0.min.js"></script> -->
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+        <script src="controllers/app.js"></script>
+        <script src="js/config.js"></script>
+
+        <!-- Controladores de páginas -->
+        
+        <!-- <script src="js/profesoresCtrl.js"></script>
+        <script src="js/alumnosCtrl.js"></script>
+        <script src="js/alumnoCtrl.js"></script> -->
+
+            
+        <script src="controllers/inicioCtrl.js"></script>
+        <script src="controllers/informesCtrl.js"></script>
+        <script src="controllers/usersCtrl.js"></script>
+
+
+    </head>    
+    <body>
+        
+        <div ng-include="menuSuperior"></div>
+
+        
+        <div class="container">
+        <!-- La pagina principal ira aquí -->
+            
+            <div ng-view></div>
+
+        </div><!-- /.container -->
+
+
+    </body>
+</html>

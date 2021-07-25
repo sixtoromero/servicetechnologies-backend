@@ -1,0 +1,73 @@
+<br>
+<label for="">Reports</label>
+<br>
+<div class="row" ng-init="allClient()">
+    <div class="col-md-4">
+        <div class="form-group">
+            <select class="form-control" ng-model="userId" ng-change="ordresByUserId(userId)">
+              <option value="0">All Clients</option>
+              <option value="{{client.id}}" ng-repeat="client in listClients">{{client.names}} {{client.surnames}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">            
+            <select class="form-control" ng-model="orderId">
+              <option value="0">All Orders</option>
+              <option value="{{order.id}}" ng-repeat="order in listOrders">Order {{order.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <button class="btn btn-primary" ng-click="generateReportbyUser()">Generate</button>
+        </div>
+    </div>    
+</div>
+<div class="row">
+    <table class="table table-striped">
+		<tr>
+			<th>Status</th>
+            <th>Order Number</th>
+            <th>Client</th>
+            <th>Invoice</th>
+            <th>Amount to pay</th>
+            <th>Amount paid</th>
+            <th>Payments</th>
+		</tr>
+		<tr ng-repeat="order in orders">
+			<td>{{order.status}}</td>
+			<td>Order {{order.id}}</td>
+			<td>{{order.names}} {{order.surnames}}</td>
+            <td>{{order.invoice_id}}</td>
+            <td>{{order.amounttopay}}</td>
+            <td>{{order.amountpaid}}</td>			
+            <td>
+                <a href="" ng-click="viewPayments(order.invoice_id, order.id)">Payments</a>
+            </td>
+		</tr>
+	</table>    
+    
+</div>
+<div class="row" ng-show="isPayment">
+    <label>Payment Order {{ order_Id }}</label>	
+    <br>
+    <table class="table table-striped">
+        <tr>
+            <th>
+                Amount
+            </th>
+            <th>
+                Date
+            </th>            
+        </tr>
+        <tr ng-repeat="payment in payments">
+            <td>
+                {{payment.amount | currency }}
+            </td>
+            <td>
+                {{payment.date | date}}
+            </td>            
+        </tr>					
+    </table>
+</div>

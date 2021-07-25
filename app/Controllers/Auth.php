@@ -19,8 +19,9 @@ class Auth extends BaseController
 
     public function __construct() {
         
-        // header('Access-Control-Allow-Origin: *');
-        // header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");    
+        Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
+        Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
+        Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
 
         helper('secure_password');
     }
