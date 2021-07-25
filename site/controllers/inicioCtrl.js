@@ -251,11 +251,13 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 					$scope.paymentSum = $scope.paymentSum + (+item.amount);
 				});
 				
-				if ($scope.paymentSum > +$scope.invoiceSel["amounttopay"]) {
+				if ($scope.paymentSum > $scope.invoiceSel["amounttopay"]) {
 					item.amount = amountVerify;
 					alert('Value to pay is greater than the total invoice value.');
 					return;
 				}
+
+				$scope.invoiceSel = item;
 
 				$http.put($scope.urlAPI + 'payments/update/' + item.id, { "amount": amountPay }).success(function(data){
 					if (data.status === 200){
