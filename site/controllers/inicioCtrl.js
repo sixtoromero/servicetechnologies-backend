@@ -237,26 +237,28 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 
 	$scope.editPayment = function(item) {
 		if ($scope.status == 'Open') {
-			
-			console.log(item, $scope.amountpaid);
-
-			$scope.total = (+$scope.amountpaid) + (+apaid);
-
-			if ($scope.total > +$scope.invoice["amounttopay"]) {
-				alert('Value to pay is greater than the total invoice value.');
-				return;
-			}
+						
 
 			var amountPay = prompt('Enter a new value.', item.amount);
-									
-			$http.put($scope.urlAPI + 'payments/update/' + item.id, { "amount": amountPay }).success(function(data){
-				if (data.status === 200){
-					$scope.updatePayments(item.invoice_id);					
+
+			if (amountPay != null) {
+				$scope.total = (+$scope.amountpaid) + (+amountPay);
+
+				if ($scope.total > +$scope.invoice["amounttopay"]) {
+					alert('Value to pay is greater than the total invoice value.');
+					return;
 				}
-				else {					
-					alert(data.data.message);
-				}
-			});
+
+				$http.put($scope.urlAPI + 'payments/update/' + item.id, { "amount": amountPay }).success(function(data){
+					if (data.status === 200){
+						$scope.updatePayments(item.invoice_id);					
+					}
+					else {					
+						alert(data.data.message);
+					}
+				});
+
+			}
 
 		} else {
 			alert('You cannot modify a payment if the status of the Order is Closed.');
