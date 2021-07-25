@@ -239,9 +239,9 @@ class Payments extends ResourceController
 				return $this->respond($json);
 			}
 
-			$invoicesVerified = $this->model->find($id);
+			$paymentsVerified = $this->model->find($id);
 
-			if ($invoicesVerified == null) {
+			if ($paymentsVerified == null) {
 				$json = array(
 					"status" => 404,
 					"message" => 'Record with Id not found '. $id,

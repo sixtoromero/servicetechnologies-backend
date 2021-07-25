@@ -247,9 +247,7 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 				item.amount = amountPay;
 				//$scope.invoiceSel = item;
 
-				$scope.paymentSum = 0;
-
-				debugger;
+				$scope.paymentSum = 0;				
 
 				$scope.payments.forEach(item => {
 					$scope.paymentSum = $scope.paymentSum + (+item.amount);
@@ -295,7 +293,7 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 		if ($scope.status == 'Open') {
 			let result = confirm('Are you sure you want to delete the payment?');
 			if (result){
-				$http.get($scope.urlAPI + 'payments/delete/' + item.id).success(function(data){
+				$http.delete($scope.urlAPI + 'payments/delete/' + item.id).success(function(data){
 					if (data.status == 200) {
 						$scope.updatePayments(item.invoice_id);
 					}
