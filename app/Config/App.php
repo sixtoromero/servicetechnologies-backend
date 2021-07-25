@@ -25,7 +25,7 @@ class App extends BaseConfig
 	 */
 	//public $baseURL = 'http://localhost:8080/';
 	//public $baseURL = 'https://www.pezcaymas.com/orders/';
-	public $baseURL = 'http://localhost/';
+	public $baseURL = 'https://servicestenhnologies.herokuapp.com/';
 	
 
 	/**
