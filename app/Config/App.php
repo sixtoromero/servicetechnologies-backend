@@ -2,7 +2,14 @@
 
 namespace Config;
 
+Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
+Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
+Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
+
+
 use CodeIgniter\Config\BaseConfig;
+
+
 
 class App extends BaseConfig
 {
@@ -23,9 +30,9 @@ class App extends BaseConfig
 	 *
 	 * @var string
 	 */
-	//public $baseURL = 'http://localhost:8080/';
+	public $baseURL = 'http://localhost:8080/';
 	//public $baseURL = 'https://www.pezcaymas.com/orders/';
-	public $baseURL = 'https://servicestenhnologies.herokuapp.com/';
+	//public $baseURL = 'https://servicestenhnologies.herokuapp.com/';
 	
 
 	/**

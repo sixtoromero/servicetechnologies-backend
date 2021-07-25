@@ -1,21 +1,11 @@
 <?php namespace App\Controllers\API;
 
-// Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
-// Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
-// Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
-
-header("Access-Control-Allow-Origin: *");
-
 use CodeIgniter\RESTful\ResourceController;
 use App\Models\UsersModel;
 
 class Users extends ResourceController
 {
     public function __construct() {
-
-		// Header('Access-Control-Allow-Origin: *'); //for allow any domain, insecure
-		// Header('Access-Control-Allow-Headers: *'); //for allow any headers, insecure
-		// Header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE'); //method allowed
 
         $this->model = $this->setModel(new UsersModel());
 		helper('secure_password');
