@@ -157,7 +157,8 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 		
 		$scope.payments = {};
 		$scope.invoiceId = item.id;
-		$scope.isPayment = true;		
+		$scope.isPayment = true;
+		$scope.invoiceSel = item;
 
 		$http.get($scope.urlAPI + 'payments/FindById/' + item.id).success(function(data){
 			if (data.data != null) {
@@ -242,10 +243,13 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 
 			if (amountPay != null) {
 				
-				var amountVerify = item.amount;
-				item.amount = amountPay;				
+				var amountVerify = item.amount;				
+				item.amount = amountPay;
+				//$scope.invoiceSel = item;
 
 				$scope.paymentSum = 0;
+
+				debugger;
 
 				$scope.payments.forEach(item => {
 					$scope.paymentSum = $scope.paymentSum + (+item.amount);
@@ -255,9 +259,7 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 					item.amount = amountVerify;
 					alert('Value to pay is greater than the total invoice value.');
 					return;
-				}
-
-				$scope.invoiceSel = item;
+				}				
 
 				$http.put($scope.urlAPI + 'payments/update/' + item.id, { "amount": amountPay }).success(function(data){
 					if (data.status === 200){
