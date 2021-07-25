@@ -23,7 +23,7 @@
 				<table>
 					<tr>						
 						<td>
-							<a href="" ng-click="deleteOrder(order.id)">Delete&nbsp;&nbsp;</a>
+							<a href="" ng-show="order.status == 'Open'" ng-click="deleteOrder(order.id)">Delete&nbsp;&nbsp;</a>
 						</td>
 						<td>
 							<a href="" ng-show="order.status == 'Open'" ng-click="closeOrder(order.id)">Close&nbsp;&nbsp;</a>
