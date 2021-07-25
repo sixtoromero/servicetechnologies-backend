@@ -21,7 +21,7 @@ class Auth extends BaseController
 
 	public function login()
 	{
-        header("Access-Control-Allow-Origin: *");
+        //header("Access-Control-Allow-Origin: *");
         
         // $email = $this->request->getPost('email');
         // $password = $this->request->getPost('password');

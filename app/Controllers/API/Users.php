@@ -16,7 +16,7 @@ class Users extends ResourceController
 
 	public function index()
 	{
-		header("Access-Control-Allow-Origin: *");
+		//header("Access-Control-Allow-Origin: *");
 
 		$users = $this->model->findAll();
 		$json = array(
@@ -29,8 +29,8 @@ class Users extends ResourceController
 	}
 
 	public function create(){
-						
-		header("Access-Control-Allow-Origin: *");
+
+		//header("Access-Control-Allow-Origin: *");
 
 		$validation =  \Config\Services::validation();
 
@@ -104,7 +104,7 @@ class Users extends ResourceController
 
 
 	public function FindById($id = null){
-		header("Access-Control-Allow-Origin: *");
+		//header("Access-Control-Allow-Origin: *");
 		try {
 
 			if ($id == null) {
@@ -149,7 +149,7 @@ class Users extends ResourceController
 	}
 
 	public function edit($id = null) {
-		header("Access-Control-Allow-Origin: *");
+		//header("Access-Control-Allow-Origin: *");
 		try {
 			if ($id == null) {
 				$json = array(
@@ -188,7 +188,7 @@ class Users extends ResourceController
 	}
 
 	public function update($id = null){
-		header("Access-Control-Allow-Origin: *");
+		//header("Access-Control-Allow-Origin: *");
 		try {
 
 			if ($id == null) {
@@ -245,7 +245,7 @@ class Users extends ResourceController
 	}
 
 	public function delete($id = null){
-		header("Access-Control-Allow-Origin: *");
+		//header("Access-Control-Allow-Origin: *");
 		try {
 
 			if ($id == null) {
