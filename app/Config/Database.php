@@ -36,6 +36,12 @@ class Database extends Config
 		'username' => 'di8ik8qpbnn4n000',
 		'password' => 'kxuvy2cgz4vbb35t',
 		'database' => 'qrkvbzg8g8t02zpa',
+
+		// 'hostname' => 'localhost',
+		// 'username' => 'root',
+		// 'password' => '1133557799',
+		// 'database' => 'bdservicetechnologiesinc',
+
 		'DBDriver' => 'MySQLi',
 		'DBPrefix' => '',
 		'pConnect' => false,
