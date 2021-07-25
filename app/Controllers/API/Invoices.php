@@ -240,7 +240,9 @@ class Invoices extends ResourceController
 					"data"=> null
 				);
 				return $this->respond($json);
-			}
+			}			
+
+
 
 			//$invoices = $this->request->getJSON();					
 

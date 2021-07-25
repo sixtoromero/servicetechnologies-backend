@@ -66,7 +66,7 @@ $routes->group('api', ['namespace' => 'App\Controllers\API'], function($routes){
 	//Payments
 	$routes->get('payments', 'Payments::index');
 	$routes->post('payments/create', 'Payments::create');
-	$routes->put('payments/update/(:num)', 'Payments::update/$1');
+	//$routes->put('payments/updatePayment/(:num)', 'Payments::updatePayment/$1');
 	$routes->get('payments/FindById/(:num)', 'Payments::FindById/$1');
 	$routes->put('payments/update/(:num)', 'Payments::update/$1');
 	$routes->delete('payments/delete/(:num)', 'Payments::delete/$1');
