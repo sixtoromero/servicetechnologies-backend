@@ -16,6 +16,10 @@ class Auth extends BaseController
     use ResponseTrait;    
 
     public function __construct() {
+        
+        header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");    
+
         helper('secure_password');
     }
 

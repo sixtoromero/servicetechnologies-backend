@@ -10,8 +10,13 @@ use App\Models\UsersModel;
 class Users extends ResourceController
 {
     public function __construct() {
+
+		header('Access-Control-Allow-Origin: *');
+        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");    
+
         $this->model = $this->setModel(new UsersModel());
-		helper('secure_password');
+		helper('secure_password');		
+
     }
 
 	public function index()
