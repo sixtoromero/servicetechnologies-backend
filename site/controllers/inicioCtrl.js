@@ -260,9 +260,12 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 				$scope.getInvoicesExists($scope.orderId, $scope.status);
 				$scope.getPayments(item.invoice_id);
 			}
-		}, err=>{
-			alert('Que pasa nojda...');
+		}).error(function (data, status, header, config) {
+			alert('Si pasa por acá');
+			console.log(data, status, header, config);
 		});
+
+		
 	}
 
 	$scope.deletePayment = function(item) {
