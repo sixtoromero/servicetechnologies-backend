@@ -297,6 +297,9 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 					if (data.status == 200) {
 						$scope.updatePayments(item.invoice_id);
 					}
+				}).error(function (error) {
+					alert('Se va por acá y no tengo ni idea que pasa');
+					$scope.updatePayments(item.invoice_id);
 				});
 			}
 		} else {
