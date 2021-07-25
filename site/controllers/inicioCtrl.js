@@ -242,6 +242,7 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 			var amountPay = prompt('Enter a new value.', item.amount);
 
 			if (amountPay != null) {
+				debugger;
 				$scope.total = (+$scope.amountpaid) + (+amountPay);
 
 				if ($scope.total > +$scope.invoice["amounttopay"]) {
