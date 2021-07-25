@@ -193,7 +193,7 @@ class Invoices extends ResourceController
 				$json = array(
 					"status" => 201,
 					"message" => 'successfull',
-					"data"=>$invoices
+					"data"=>$invoicesVerified
 				);
 				return $this->respondUpdated($json);
 			else:
@@ -262,7 +262,7 @@ class Invoices extends ResourceController
 				$json = array(
 					"status" => 200,
 					"message" => 'successfull',
-					"data"=>$invoices
+					"data"=>$invoicesVerified
 				);
 				return $this->respondUpdated($json);
 			else:
@@ -280,7 +280,7 @@ class Invoices extends ResourceController
 			$json = array(
 				"status" => 404,
 				"message" => $e,
-				"data"=>$invoices
+				"data"=>null
 			);
 	
 			return $this->respond($json);

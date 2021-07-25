@@ -142,7 +142,7 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 				alert('The payment was successful.');
 
 				$scope.getInvoicesExists(order_id, $scope.status);
-				$scope.getPayments($scope.invoiceId);				
+				$scope.getPayments(data.data);
 
 				$scope.isEnable = false;
 			}
@@ -153,13 +153,13 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 		});
 	}
 
-	$scope.getPayments = function(invoice_id){
+	$scope.getPayments = function(item){
 		
 		$scope.payments = {};
-		$scope.invoiceId = invoice_id;
+		$scope.invoiceId = item.id;
 		$scope.isPayment = true;		
 
-		$http.get($scope.urlAPI + 'payments/FindById/' + invoice_id).success(function(data){
+		$http.get($scope.urlAPI + 'payments/FindById/' + item.id).success(function(data){
 			if (data.data != null) {
 				//$scope.createInvoice(order_id);
 				$scope.payments = data.data;
@@ -277,11 +277,11 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 		$http.put($scope.urlAPI + 'invoices/updatePayment/' + invoice_id, null).success(function(result){
 			if (result.status === 200){
 				$scope.getInvoicesExists($scope.orderId, $scope.status);
-				$scope.getPayments(item.invoice_id);
+				$scope.getPayments(result.data);
 			}
 		}).error(function (error) {
 			$scope.getInvoicesExists($scope.orderId, $scope.status);
-			$scope.getPayments(item.invoice_id);
+			$scope.getPayments($scope.invoiceSel);
 		});
 
 		
