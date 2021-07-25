@@ -210,7 +210,7 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 
 		var resp = confirm("Are you sure to delete the order?!");
 		if (resp) {
-			$http.get($scope.urlAPI + 'orders/delete/' + order_id).success(function(data){				
+			$http.delete($scope.urlAPI + 'orders/delete/' + order_id).success(function(data){				
 				alert(data.message);
 				if (data.status == 200) {
 					$scope.getOrdersByUserId($scope.dataUser.id);
