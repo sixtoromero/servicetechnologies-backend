@@ -100,7 +100,7 @@ app.controller('inicioCtrl', ['$scope', '$http', function($scope, $http){
 		$scope.invoice = {};
 		$scope.status = status;
 		
-		$http.get($scope.urlAPI + 'orders/FindById/' + order_id).success(function(data){
+		$http.get($scope.urlAPI + 'invoices/FindById/' + order_id).success(function(data){
 			console.log(data);
 			
 			if (data.data == null) {
