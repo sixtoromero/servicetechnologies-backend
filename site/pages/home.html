@@ -1,3 +1,9 @@
+<style>
+	.color-tr {
+		background-color: green;
+	}
+	
+</style>
 <div class="row" align="right">	
 	<button class="btn btn-info" ng-disabled="isEnable" ng-click="createOrder()">
 		Add Order
@@ -21,7 +27,7 @@
 			<td><a href="" ng-click="getInvoicesExists(order.id, order.status);">Show Invoice</a></td>
 			<td>
 				<table>
-					<tr>						
+					<tr ng-class="order.status == 'Closed' : color-tr''">
 						<td>
 							<a href="" ng-show="order.status == 'Open'" ng-click="deleteOrder(order.id)">Delete&nbsp;&nbsp;</a>
 						</td>
