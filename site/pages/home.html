@@ -1,8 +1,8 @@
 <style>
-	.color-tr {
+	.closed-order {
 		background-color: green;
 	}
-	
+
 </style>
 <div class="row" align="right">	
 	<button class="btn btn-info" ng-disabled="isEnable" ng-click="createOrder()">
@@ -20,14 +20,14 @@
 			<th>Invoices</th>
 			<th>Actions</th>
 		</tr>
-		<tr ng-repeat="order in orders | limitTo: posicion | limitTo: -5">
+		<tr ng-repeat="order in orders | limitTo: posicion | limitTo: -5" ng-class="{ 'closed-order' : order.status === 'Closed' }">
 			<td>{{order.status}}</td>
 			<td>Order{{order.id}}</td>
 			<td>{{order.names}} {{order.surnames}}</td>
 			<td><a href="" ng-click="getInvoicesExists(order.id, order.status);">Show Invoice</a></td>
 			<td>
 				<table>
-					<tr ng-class="order.status == 'Closed' : color-tr''">
+					<tr>
 						<td>
 							<a href="" ng-show="order.status == 'Open'" ng-click="deleteOrder(order.id)">Delete&nbsp;&nbsp;</a>
 						</td>
