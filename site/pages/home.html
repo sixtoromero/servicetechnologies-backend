@@ -20,12 +20,12 @@
 			<th>Invoices</th>
 			<th>Actions</th>
 		</tr>
-		<tr ng-repeat="order in orders | limitTo: posicion | limitTo: -5" ng-class="{ 'closed-order' : order.status === 'Closed' }">
-			<td>{{order.status}}</td>
-			<td>Order{{order.id}}</td>
-			<td>{{order.names}} {{order.surnames}}</td>
-			<td><a href="" ng-click="getInvoicesExists(order.id, order.status);">Show Invoice</a></td>
-			<td>
+		<tr ng-repeat="order in orders | limitTo: posicion | limitTo: -5">
+			<td ng-class="{ 'closed-order' : order.status === 'Closed' }">{{order.status}}</td>
+			<td ng-class="{ 'closed-order' : order.status === 'Closed' }">Order{{order.id}}</td>
+			<td ng-class="{ 'closed-order' : order.status === 'Closed' }">{{order.names}} {{order.surnames}}</td>
+			<td ng-class="{ 'closed-order' : order.status === 'Closed' }"><a href="" ng-click="getInvoicesExists(order.id, order.status);">Show Invoice</a></td>
+			<td ng-class="{ 'closed-order' : order.status === 'Closed' }">
 				<table>
 					<tr>
 						<td>
